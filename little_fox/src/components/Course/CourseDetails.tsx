@@ -19,9 +19,10 @@ const CourseDetails: React.FC = () => {
         const fetchEvents = async () => {
             try {
                 const response = await axios.get(`http://127.0.0.1:3000/courses/${id}.json`);
-                const { course, teachers } = response.data;
+                const course  = response.data;
+                console.log(localStorage["studentId"])
                 setCourse(course);
-                const teacherNames = teachers.map((teacher: any) => teacher.name);
+                const teacherNames = course.teachers.map((teacher: any) => teacher.name);
                 setTeachers(teacherNames);
                 const facul = await axios.get(`http://127.0.0.1:3000/faculties/${course.faculty_id}.json`);
                 setFaculty(facul.data.name)
@@ -45,7 +46,7 @@ const CourseDetails: React.FC = () => {
                 text: data.text,
                 rating: parseInt(data.rating),
                 course_id: course.id,
-                student_id: 10
+                student_id: localStorage["studentId"]
             });
 
             reset();

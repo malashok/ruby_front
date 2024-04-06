@@ -28,9 +28,10 @@ const LoginForm = (props: LoginFormProps) => {
    console.log(formData);
         axios.post("http://127.0.0.1:3000/users/sign_in.json", formData)
             .then(response => {
-                const { id, email, role } = response.data;
+                const { id, email, role, student } = response.data;
                 localStorage.setItem("id", id);
                 localStorage.setItem("role", role);
+                if (student) localStorage.setItem("studentId", student.id);
                 console.log(localStorage["role"]);
                 if (localStorage["role"] == "admin"){navigate("/admin")}
                 if (role == "student"){navigate("/courses")}
