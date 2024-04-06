@@ -1,4 +1,4 @@
-import {FormEventHandler, useState} from "react";
+import {FormEventHandler, useEffect, useState} from "react";
 import "./Form.css"
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -14,6 +14,10 @@ const LoginForm = (props: LoginFormProps) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
 
+    // useEffect(() => {
+    //     localStorage.clear(); //sign_out
+    // }, []);
+
     const handleFormSubmit = (data: { email: string; password: string }) => {
         const formData = {
             user: {
@@ -24,7 +28,7 @@ const LoginForm = (props: LoginFormProps) => {
    console.log(formData);
         axios.post("http://127.0.0.1:3000/users/sign_in.json", formData)
             .then(response => {
-                const { id, role } = response.data;
+                const { id, email, role } = response.data;
                 localStorage.setItem("id", id);
                 localStorage.setItem("role", role);
                 console.log(localStorage["role"]);
