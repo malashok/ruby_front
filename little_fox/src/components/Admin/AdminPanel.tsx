@@ -200,6 +200,74 @@ const TeacherCreate = (props) => (
     </Create>
 );
 
+const ResponseList = (props) => (
+    <List {...props} >
+        <Datagrid>
+            <TextField source="id" />
+            <TextField source="text" />
+            <TextField source="rating" />
+            <ReferenceField label="Student" source="student_id" reference="students">
+                <TextField source="name" />
+            </ReferenceField>
+            <ReferenceField label="Course" source="course_id" reference="courses">
+                <TextField source="title" />
+            </ReferenceField>
+            <DeleteButton resource="responses" />
+        </Datagrid>
+    </List>
+);
+
+const ResponseDelete = (props) => (
+    <DeleteWithConfirmButton {...props} />
+);
+
+const TeacherCourseList = (props) => (
+    <List {...props} >
+        <Datagrid>
+            <TextField source="id" />
+            <ReferenceField label="Teacher" source="teacher_id" reference="teachers">
+                <TextField source="name" />
+            </ReferenceField>
+            <ReferenceField label="Course" source="course_id" reference="courses">
+                <TextField source="title" />
+            </ReferenceField>
+            <EditButton resource="teacher_courses" />
+            <DeleteButton resource="teacher_courses" />
+        </Datagrid>
+    </List>
+);
+
+const TeacherCourseDelete = (props) => (
+    <DeleteWithConfirmButton {...props} />
+);
+
+const TeacherCourseCreate = (props) => (
+    <Create {...props} redirect="list" >
+        <SimpleForm>
+            <ReferenceInput label="Teacher" source="teacher_id" reference={TeacherResource.name}>
+                <SelectInput optionText="name" />
+            </ReferenceInput>
+            <ReferenceInput label="Course" source="course_id" reference={CourseResource.name}>
+                <SelectInput optionText="title" />
+            </ReferenceInput>
+        </SimpleForm>
+    </Create>
+);
+
+const TeacherCourseEdit = (props) => (
+    <Edit {...props} redirect="list" >
+        <SimpleForm>
+            <ReferenceInput label="Teacher" source="teacher_id" reference={TeacherResource.name}>
+                <SelectInput optionText="name" />
+            </ReferenceInput>
+            <ReferenceInput label="Course" source="course_id" reference={CourseResource.name}>
+                <SelectInput optionText="title" />
+            </ReferenceInput>
+        </SimpleForm>
+    </Edit>
+);
+
+
 const CourseResource = {
     name: 'courses',
     list: CourseList,
@@ -240,6 +308,20 @@ const TeacherResource = {
     remove: TeacherDelete,
 };
 
+const ResponseResource = {
+    name: 'responses',
+    list: ResponseList,
+    remove: ResponseDelete,
+};
+
+const TeacherCourseResource = {
+    name: 'teacher_courses',
+    list: TeacherCourseList,
+    edit: TeacherCourseEdit,
+    create: TeacherCourseCreate,
+    remove: TeacherCourseDelete,
+};
+
 const AdminPanel = () => (
     <>
     <Admin basename="/admin" dataProvider={customDataProvider} >
@@ -248,6 +330,8 @@ const AdminPanel = () => (
         <Resource {...UserResource} />
         <Resource {...StudentResource} />
         <Resource {...TeacherResource} />
+        <Resource {...ResponseResource} />
+        <Resource {...TeacherCourseResource} />
     </Admin>
     </>
 )
