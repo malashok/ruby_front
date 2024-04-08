@@ -1,7 +1,7 @@
-import {FormEventHandler, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import "./Courses.css"
-import "./Input.css"
+import "../Login/Form.css"
 import CourseInterface from "../../interfaces/CourseInterface.ts";
 import { useParams} from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -42,7 +42,7 @@ const CourseDetails: React.FC = () => {
 
     const onSubmit = async (data: any) => {
         try {
-            await axios.post(`http://127.0.0.1:3000/responses.json`, {
+            const response = await axios.post(`http://127.0.0.1:3000/responses.json`, {
                 text: data.text,
                 rating: parseInt(data.rating),
                 course_id: course.id,
@@ -50,16 +50,26 @@ const CourseDetails: React.FC = () => {
             });
 
             reset();
+            setResponses(prevResponses => [...prevResponses, response.data]);
         } catch (error) {
             console.error("Error adding response:", error);
         }
     };
 
+    const handleDelete = async (id: number) => {
+        try {
+            await axios.delete(`http://127.0.0.1:3000/responses/${id}.json`);
+            setResponses(prevResponses => prevResponses.filter(response => response.id !== id));
+        } catch (error) {
+            console.error("Error deleting response:", error);
+        }
+    };
+
     return (
         <div className="grid">
-                <div key={course.id} className="card">
-                    <h3 className="card__title">{course.title}
-                    </h3>
+                <div key={course.id} className="card card__border">
+                    <div className="card__title">{course.title}
+                    </div>
                     <p className="card__content">{course.description} </p>
                     <p className="card__content">
                         Факультет: {faculty}
@@ -68,22 +78,24 @@ const CourseDetails: React.FC = () => {
                         Викладач: {teachers.join(", ")}
                     </p>
                 </div>
-            <div className="cont">
-                <form className="" onSubmit={handleSubmit(onSubmit)}>
+            <div>
+                <form className="form form__border" onSubmit={handleSubmit(onSubmit)}>
                     <div className="input-container">
-                        <label htmlFor="text">Response Text:</label>
-                        <input
-                            type="text"
-                            id="text"
-                            {...register("text", { required: true })}
-                        />
-                    </div>
-                    <div className="input-container">
-                        <label htmlFor="rating">Rating:</label>
-                        <input
-                            type="number"
+                        <label htmlFor="rating">Оцініть курс:</label>
+                        <select
                             id="rating"
                             {...register("rating", { required: true })}
+                        >
+                        {[...Array(5).keys()].map((value) => (
+                            <option key={value + 1} value={value + 1}>{value + 1}</option>
+                        ))}
+                        </select>
+                    </div>
+                    <div className="input-container">
+                        <label htmlFor="text">Текст відгуку:</label>
+                        <textarea
+                            id="text"
+                            {...register("text", { required: true })}
                         />
                     </div>
                     <button className="submit" type="submit">Submit</button>
@@ -91,12 +103,18 @@ const CourseDetails: React.FC = () => {
             </div>
             {responses.map(res => (
                 <div key={res.id} className="card">
-                    <h3 className="card__title">{res.rating}
-                    </h3>
-                    <p className="card__content">{res.text} </p>
+                    <div className="card__cont">
+                    <div className="card__title"><b>Оцінка:</b> {res.rating}
+                    </div>
+                        {localStorage["studentId"] == res.student_id &&
+                    <div onClick={() => handleDelete(res.id)} className="card__status"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                        <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                    </svg></div>}
+                    </div>
+                    <p className="card__content"><b>Відгук:</b> {res.text} </p>
                 </div>
             ))}
-
         </div>
     );
 };

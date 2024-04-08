@@ -1,12 +1,14 @@
-import {FormEventHandler, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
 import "./Courses.css"
 import "./Input.css"
 import CourseInterface from "../../interfaces/CourseInterface.ts";
 import {Link} from "react-router-dom";
+import {useForm} from "react-hook-form";
 
 const CoursesPage: React.FC = () => {
     const [courses, setCourses] = useState<CourseInterface[]>([]);
+    const { register, handleSubmit } = useForm<{ search: string }>();
 
     useEffect(() => {
         const fetchEvents = async () => {
@@ -20,12 +22,34 @@ const CoursesPage: React.FC = () => {
         };
         fetchEvents();
     }, []);
+
+    const onSubmit = async (data: { search: string }) => {
+        if (data.search !== ''){
+            const filteredCourses = courses.filter(course =>
+                course.title.toLowerCase().includes(data.search.toLowerCase())
+            );
+            setCourses(filteredCourses);
+        } else {
+            const response = await axios.get(`http://127.0.0.1:3000/courses.json`);
+            setCourses(response.data);
+        }
+    };
+
     return (
         <div className="grid">
+            <form onSubmit={handleSubmit(onSubmit)}>
             <div className="input-group">
-                <input type="text" className="input" id="search" name="Email" placeholder="Пошук" autoComplete="off" />
-                    <input className="button--submit" value="Subscribe" type="submit" />
+                <input
+                    type="text"
+                    className="input"
+                    id="search"
+                    placeholder="Пошук"
+                    autoComplete="off"
+                    {...register("search")}
+                />
+                <button className="button--submit" type="submit">Шукати</button>
             </div>
+            </form>
             {courses.map(course => (
                 <div key={course.id} className="card">
                     <h3 className="card__title">{course.title}

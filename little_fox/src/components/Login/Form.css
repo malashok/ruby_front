@@ -14,6 +14,13 @@
     box-shadow: 0 10px 15px 10px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
+.form__border {
+    border: 1px solid grey;
+    box-shadow: none;
+    width: 600px !important;
+    max-width: 600px !important;
+}
+
 .form-title {
     font-size: 1.25rem;
     line-height: 1.75rem;
@@ -26,7 +33,7 @@
     position: relative;
 }
 
-.input-container input, .form button {
+.input-container input, .input-container textarea, .input-container select, .form button {
     outline: none;
     border: 1px solid #e5e7eb;
     margin: 8px 0;
@@ -35,10 +42,31 @@
 .input-container input {
     background-color: #fff;
     padding: 1rem;
-    padding-right: 3rem;
     font-size: 0.875rem;
     line-height: 1.25rem;
     width: 250px;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.input-container textarea {
+    background-color: #fff;
+    padding: 1rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    width: 94%;
+    max-width: 100%;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.input-container select {
+    background-color: #fff;
+    padding: 1rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    width: 100px;
+    margin-left: 20px;
     border-radius: 0.5rem;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
@@ -69,3 +97,5 @@
 .signup-link a {
     text-decoration: underline;
 }
+
+
