@@ -24,8 +24,8 @@ const CourseDelete = (props) => (
 const CourseEdit = (props) => (
     <Edit {...props} redirect="list" >
         <SimpleForm>
-            <TextInput source="title" />
-            <TextInput source="description" />
+            <TextInput source="title"  fullWidth/>
+            <TextInput source="description" multiline fullWidth />
             <ReferenceInput label="Faculty" source="faculty_id" reference={FacultyResource.name}>
                 <SelectInput optionText="name" />
             </ReferenceInput>
@@ -36,8 +36,8 @@ const CourseEdit = (props) => (
 const CourseCreate = (props) => (
     <Create {...props} redirect="list" >
         <SimpleForm>
-            <TextInput source="title" />
-            <TextInput source="description" />
+            <TextInput source="title" fullWidth/>
+            <TextInput source="description" multiline fullWidth/>
             <ReferenceInput label="Faculty" source="faculty_id" reference={FacultyResource.name}>
                 <SelectInput optionText="name" />
             </ReferenceInput>
@@ -64,7 +64,7 @@ const FacultyDelete = (props) => (
 const FacultyEdit = (props) => (
     <Edit {...props} redirect="list" >
         <SimpleForm>
-            <TextInput source="name" />
+            <TextInput source="name" fullWidth/>
         </SimpleForm>
     </Edit>
 );
@@ -72,7 +72,7 @@ const FacultyEdit = (props) => (
 const FacultyCreate = (props) => (
     <Create {...props} redirect="list">
         <SimpleForm>
-            <TextInput source="name" />
+            <TextInput source="name" fullWidth/>
         </SimpleForm>
     </Create>
 );
@@ -96,7 +96,7 @@ const UserDelete = (props) => (
 const UserEdit = (props) => (
     <Edit {...props} redirect="list" >
         <SimpleForm>
-            <TextInput source="email" />
+            <TextInput source="email" fullWidth/>
             <SelectInput source="role" choices={[
                 { id: 'student', name: 'student' },
                 { id: 'admin', name: 'admin' },
@@ -108,8 +108,8 @@ const UserEdit = (props) => (
 const UserCreate = (props) => (
     <Create {...props} redirect="list" >
         <SimpleForm>
-            <TextInput source="email" />
-            <TextInput source="password" type="password" />
+            <TextInput source="email" fullWidth/>
+            <TextInput source="password" type="password" fullWidth/>
             <SelectInput source="role" choices={[
                 { id: 'student', name: 'student' },
                 { id: 'admin', name: 'admin' },
@@ -140,7 +140,7 @@ const StudentDelete = (props) => (
 const StudentEdit = (props) => (
     <Edit {...props} redirect="list" >
         <SimpleForm>
-            <TextInput source="name" />
+            <TextInput source="name" fullWidth/>
             <NumberInput
                 source="course_num"
                 min={1}
@@ -156,7 +156,7 @@ const StudentEdit = (props) => (
 const StudentCreate = (props) => (
     <Create {...props} redirect="list" >
         <SimpleForm>
-            <TextInput source="name" />
+            <TextInput source="name" fullWidth/>
             <NumberInput
                 source="course_num"
                 min={1}
@@ -187,7 +187,7 @@ const TeacherDelete = (props) => (
 const TeacherEdit = (props) => (
     <Edit {...props} redirect="list" >
         <SimpleForm>
-            <TextInput source="name" />
+            <TextInput source="name" fullWidth/>
         </SimpleForm>
     </Edit>
 );
@@ -195,7 +195,7 @@ const TeacherEdit = (props) => (
 const TeacherCreate = (props) => (
     <Create {...props} redirect="list">
         <SimpleForm>
-            <TextInput source="name" />
+            <TextInput source="name" fullWidth/>
         </SimpleForm>
     </Create>
 );
