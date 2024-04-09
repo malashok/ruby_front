@@ -14,10 +14,6 @@ const LoginForm = (props: LoginFormProps) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate();
 
-    // useEffect(() => {
-    //     localStorage.clear(); //sign_out
-    // }, []);
-
     const handleFormSubmit = (data: { email: string; password: string }) => {
         const formData = {
             user: {
@@ -33,8 +29,9 @@ const LoginForm = (props: LoginFormProps) => {
                 localStorage.setItem("role", role);
                 if (student) localStorage.setItem("studentId", student.id);
                 console.log(localStorage["role"]);
-                if (localStorage["role"] == "admin"){navigate("/admin")}
+                if (role == "admin"){navigate("/admin")}
                 if (role == "student"){navigate("/courses")}
+
             })
             .catch(error => {
                 console.error("Error:", error);

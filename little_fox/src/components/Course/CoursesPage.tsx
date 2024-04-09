@@ -13,7 +13,7 @@ const CoursesPage: React.FC = () => {
     useEffect(() => {
         const fetchEvents = async () => {
             try {
-                const response = await axios.get(`http://127.0.0.1:3000/courses.json`);
+                const response = await axios.get("http://127.0.0.1:3000/courses.json");
                 setCourses(response.data);
                 console.log(response.data);
             } catch (error) {
@@ -30,7 +30,7 @@ const CoursesPage: React.FC = () => {
             );
             setCourses(filteredCourses);
         } else {
-            const response = await axios.get(`http://127.0.0.1:3000/courses.json`);
+            const response = await axios.get("http://127.0.0.1:3000/courses.json");
             setCourses(response.data);
         }
     };
@@ -38,17 +38,17 @@ const CoursesPage: React.FC = () => {
     return (
         <div className="grid">
             <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="input-group">
-                <input
-                    type="text"
-                    className="input"
-                    id="search"
-                    placeholder="Пошук"
-                    autoComplete="off"
-                    {...register("search")}
-                />
-                <button className="button--submit" type="submit">Шукати</button>
-            </div>
+                <div className="input-group">
+                    <input
+                        type="text"
+                        className="input"
+                        id="search"
+                        placeholder="Пошук"
+                        autoComplete="off"
+                        {...register("search")}
+                    />
+                    <button className="button--submit" type="submit">Шукати</button>
+                </div>
             </form>
             {courses.map(course => (
                 <div key={course.id} className="card">
