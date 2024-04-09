@@ -45,6 +45,7 @@
 .card .card__date {
     color: #6e6b80;
     font-size: 0.8rem;
+    padding-bottom: 10px;
 }
 
 .card .card__arrow {

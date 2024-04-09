@@ -113,6 +113,7 @@ const CourseDetails: React.FC = () => {
                     </svg></div>}
                     </div>
                     <p className="card__content"><b>Відгук:</b> {res.text} </p>
+                    <div className="card__date">від: {res.student.name}</div>
                 </div>
             ))}
         </div>

@@ -11,8 +11,8 @@ function App() {
             <Routes>
                 <Route exact path="/" element={<LoginForm />} />
                 <Route path="/admin/*" element={localStorage["role"] === "admin" ? <AdminPanel /> : <LoginForm/>} />
-                <Route path="/courses" element={<CoursesPage />} />
-                <Route path="/courses/:id" element={<CourseDetails />} />
+                <Route path="/courses" element={localStorage["role"] === "student" ? <CoursesPage /> : <LoginForm/>}/>
+                <Route path="/courses/:id" element={localStorage["role"] === "student" ? <CourseDetails /> : <LoginForm/>} />
             </Routes>
         </Router>
     );
